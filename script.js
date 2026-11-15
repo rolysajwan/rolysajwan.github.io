@@ -1,3 +1,13 @@
+Bilkul bhai. Neeche tumhari poori updated script.js file ka code hai. Tumhe kuch download nahi karna hai.
+GitHub par code kaise paste karna hai?
+GitHub mein apni repository kholo.
+script.js file kholo.
+✏️ Edit (pencil) button dabao.
+Purana poora code select karke delete karo.
+Neeche diya gaya code poora copy karke paste karo.
+Commit changes par click karo.
+Dhyan dena: Company names aur dates ko actual employment history ke roop mein tabhi publish karna jab woh sach hon. Agar ye sirf sample entries hain, toh publish karne se pehle unhe sahi kar lena.
+Pura script.js code
 (() => {
   "use strict";
 
@@ -30,7 +40,13 @@
       ]]
     ],
 
-  experience: [
+    /*
+      IMPORTANT:
+      Publish these employer names and dates as employment history ONLY if
+      they accurately reflect your real work history.
+    */
+
+    experience: [
       {
         title: "Data Entry Operator | Accounts Executive | MIS Reporting",
         company: "Accenture",
@@ -373,3 +389,6 @@
     : init();
 
 })();
+Code paste karne ke baad
+GitHub par Commit changes kar dena. Phir website kholkar refresh karna.
+Agar experience section update na ho, toh website ka screenshot bhej dena. Main check karunga ki problem JavaScript mein hai ya HTML/CSS mein.
