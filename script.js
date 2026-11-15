@@ -30,13 +30,7 @@
       ]]
     ],
 
-    /*
-      IMPORTANT:
-      Publish these employer names and dates as employment history ONLY if
-      they accurately reflect your real work history.
-    */
-
-    experience: [
+  experience: [
       {
         title: "Data Entry Operator | Accounts Executive | MIS Reporting",
         company: "Accenture",
