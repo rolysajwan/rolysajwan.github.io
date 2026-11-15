@@ -12,6 +12,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<style>
+/* 3D layer */
+.hero{position:relative;overflow:hidden}
+.stage{position:relative;perspective:1100px;align-self:end}
+#chart3d{position:absolute;left:-22%;top:-14%;width:144%;height:124%;z-index:0;pointer-events:none}
+#tilt{position:relative;z-index:1;transform-style:preserve-3d;will-change:transform;box-shadow:0 30px 60px rgba(0,0,0,.5)}
+.timeline{perspective:1000px}
+.js .job.reveal{transform:rotateX(14deg) translateY(36px);transform-origin:50% 0;transition:opacity .8s,transform .9s cubic-bezier(.2,.7,.1,1)}
+.js .job.reveal.in{transform:none}
+@media(prefers-reduced-motion:reduce){#tilt{transform:none!important}.js .job.reveal{transform:none}}
+</style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -35,7 +46,7 @@
       <div><dt>Tools</dt><dd>Excel, Word</dd></div>
     </dl>
   </div>
-  <figure class="photo hero-photo"><img src="portrait.jpg" width="1050" height="1400" alt="Rahul Singh Sajwan standing outdoors in a blue checked shirt, hands in pockets" fetchpriority="high"><figcaption class="mono">Rahul Singh Sajwan</figcaption></figure>
+  <div class="stage" id="stage"><canvas id="chart3d" aria-hidden="true"></canvas><figure class="photo hero-photo" id="tilt"><img src="portrait.jpg" width="1050" height="1400" alt="Rahul Singh Sajwan standing outdoors in a blue checked shirt, hands in pockets" fetchpriority="high"><figcaption class="mono">Rahul Singh Sajwan</figcaption></figure></div>
 </section>
 
 <section id="profile" class="split">
@@ -154,6 +165,46 @@ function init() {
   [initNav, renderSkills, renderExperience, renderContact, initReveal].forEach(f => { try { f(); } catch (e) { console.error(f.name, e); } });
 }
 document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", init) : init();
+})();
+</script>
+<script>
+/* 3D: ledger bar-chart wireframe behind the portrait + pointer tilt */
+(() => {
+const cv=document.getElementById("chart3d"),card=document.getElementById("tilt"),stage=document.getElementById("stage");
+const ctx=cv&&cv.getContext&&cv.getContext("2d"); if(!ctx||!card||!stage) return;
+const rm=matchMedia("(prefers-reduced-motion: reduce)");
+const bars=[.5,.85,.65,1.05,.8,1.25,.95], STEEL="rgba(144,150,160,.45)", BRASS="#C9A66B";
+let w,h,dpr,px=0,py=0,sx=0,sy=0,raf=0,on=false,t0=performance.now(),idle=true;
+const size=()=>{const r=cv.getBoundingClientRect();dpr=Math.min(devicePixelRatio||1,2);w=r.width;h=r.height;cv.width=w*dpr;cv.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)};
+function draw(t){
+  const yaw=.55+Math.sin(t*.00015)*.4+sx*.45, pitch=.5+sy*.12, s=Math.min(w,h)*.17;
+  const cy=Math.cos(yaw),sy_=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+  const P=(x,y,z)=>{const X=x*cy-z*sy_,Z=x*sy_+z*cy,Y=y*cp+Z*sp,D=-y*sp+Z*cp,f=4/(4+D);return[w/2+X*s*f,h*.66-Y*s*f]};
+  ctx.clearRect(0,0,w,h); ctx.lineWidth=1; ctx.strokeStyle="rgba(144,150,160,.18)";
+  ctx.beginPath(); for(let i=-4;i<=4;i++){let a=P(i,0,-2),b=P(i,0,2);ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);a=P(-4,0,i/2);b=P(4,0,i/2);ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1])} ctx.stroke();
+  bars.forEach((v,i)=>{
+    const x=(i-3)*1.05,k=.3,hh=v*(.92+.08*Math.sin(t*.0009+i*1.3)),c=[[-k,-k],[k,-k],[k,k],[-k,k]];
+    const lo=c.map(([a,b])=>P(x+a,0,b)),hi=c.map(([a,b])=>P(x+a,hh,b));
+    ctx.strokeStyle=STEEL; ctx.beginPath();
+    lo.forEach((p,j)=>{const q=lo[(j+1)%4];ctx.moveTo(p[0],p[1]);ctx.lineTo(q[0],q[1]);ctx.moveTo(p[0],p[1]);ctx.lineTo(hi[j][0],hi[j][1])}); ctx.stroke();
+    ctx.strokeStyle=i===5?BRASS:"rgba(237,234,227,.55)"; ctx.beginPath();
+    hi.forEach((p,j)=>{const q=hi[(j+1)%4];ctx.moveTo(p[0],p[1]);ctx.lineTo(q[0],q[1])}); ctx.stroke();
+  });
+}
+function frame(now){
+  const t=now-t0, tx=idle?Math.sin(t*.0005)*.45:px, ty=idle?Math.cos(t*.0004)*.3:py;
+  sx+=(tx-sx)*.06; sy+=(ty-sy)*.06;
+  card.style.transform=`rotateY(${(sx*7).toFixed(2)}deg) rotateX(${(-sy*5).toFixed(2)}deg)`;
+  draw(now); raf=on?requestAnimationFrame(frame):0;
+}
+const start=()=>{if(!on&&!rm.matches){on=true;raf=requestAnimationFrame(frame)}},stop=()=>{on=false;cancelAnimationFrame(raf)};
+size(); draw(0);
+if(rm.matches) return;
+let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{size();draw(performance.now())},150)});
+addEventListener("pointermove",e=>{px=(e.clientX/innerWidth-.5)*2;py=(e.clientY/innerHeight-.5)*2;idle=false},{passive:true});
+document.addEventListener("pointerleave",()=>{idle=true});
+document.addEventListener("visibilitychange",()=>document.hidden?stop():start());
+if("IntersectionObserver" in window) new IntersectionObserver(es=>es[0].isIntersecting?start():stop()).observe(stage); else start();
 })();
 </script>
 </body>
