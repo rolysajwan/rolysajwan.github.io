@@ -179,6 +179,31 @@ h1 em{font-weight:400;color:var(--green);font-style:italic}
  .statement{padding:66px 0}.statement p{font-size:14px}.contact-section{padding-top:70px}.contact-box{padding-bottom:45px}.contact-box h2{font-size:clamp(54px,15vw,76px)}.contact-box p{font-size:14px}.footer{font-size:10px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}.fade{opacity:1;transform:none}}
+
+.brand-logo-img{width:34px;height:34px;object-fit:cover;border-radius:50%;display:block;flex:none;background:#f7f3e9;border:1px solid #c7a66b}
+.project-logo-badge{position:absolute;z-index:3;top:18px;left:22px;width:66px;height:66px;object-fit:cover;border-radius:50%;border:1px solid #d5b56e;box-shadow:0 8px 20px #0c20184a}\n.poster-feature{margin-top:28px;background:var(--white);border:1px solid #dfddd2;border-radius:28px;overflow:hidden;display:grid;grid-template-columns:minmax(0,0.9fr) minmax(0,1.1fr);align-items:center}
+.poster-feature-copy{padding:clamp(24px,4vw,42px)}
+.poster-feature-copy .kicker{margin-bottom:12px}
+.poster-feature-copy h3{font-family:Georgia,serif;font-weight:400;font-size:clamp(30px,4vw,44px);letter-spacing:-.04em;line-height:1.04;margin:12px 0 16px}
+.poster-feature-copy p{font-size:14px;line-height:1.8;color:var(--muted);margin:0}
+.poster-image-wrap{padding:clamp(16px,3vw,28px);background:#f2eee4;display:flex;justify-content:center;align-items:center;min-height:380px}
+.poster-image-wrap img{display:block;width:min(100%,430px);height:auto;max-height:620px;object-fit:contain;border-radius:8px;box-shadow:0 18px 45px #1a241a18}
+@media(max-width:680px){.poster-feature{grid-template-columns:1fr}.poster-image-wrap{min-height:0}.brand-logo-img{width:30px;height:30px}}
+
+
+.personal-hero-visual{position:relative;min-height:440px;height:100%;max-height:620px;overflow:hidden;border-radius:28px;background:#e9e5dc;border:1px solid #ded8ca;box-shadow:0 24px 60px #1a241a12}
+.personal-hero-visual img{width:100%;height:100%;min-height:440px;max-height:620px;display:block;object-fit:cover;object-position:center 28%}
+.personal-photo-caption{position:absolute;left:18px;right:18px;bottom:18px;padding:16px 18px;border:1px solid #ffffff6b;border-radius:14px;background:#f8f6f0d9;backdrop-filter:blur(14px);display:flex;flex-direction:column;gap:5px}
+.personal-photo-caption span{font-size:11px;letter-spacing:.16em;font-weight:700}.personal-photo-caption small{font-size:12px;color:#555b55}
+.personal-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:30px}
+.personal-gallery figure{margin:0;background:var(--white);border:1px solid #dfddd2;border-radius:20px;overflow:hidden}
+.personal-gallery img{width:100%;height:310px;display:block;object-fit:cover}
+.personal-gallery figcaption{padding:14px 16px;font-size:13px;color:var(--muted)}
+.bottle-concept-feature{margin-top:28px;border:1px solid #dfddd2;border-radius:24px;background:#f5f1e8;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);overflow:hidden;align-items:center}
+.bottle-concept-feature img{width:100%;height:520px;display:block;object-fit:contain;padding:16px;background:#e9e5dc}
+.bottle-concept-feature .copy{padding:clamp(24px,4vw,42px)}.bottle-concept-feature h3{font-family:Georgia,serif;font-size:clamp(28px,3vw,40px);font-weight:400;line-height:1.1;letter-spacing:-.035em;margin:12px 0}.bottle-concept-feature p{font-size:14px;line-height:1.8;color:var(--muted)}
+@media(max-width:680px){.personal-gallery{grid-template-columns:1fr 1fr;gap:12px}.personal-gallery img{height:220px}.personal-gallery figure:first-child{grid-column:1/-1}.personal-gallery figure:first-child img{height:320px}.personal-hero-visual,.personal-hero-visual img{min-height:360px}.bottle-concept-feature{grid-template-columns:1fr}.bottle-concept-feature img{height:440px}}
+
 </style>
 </head>
 <body>
@@ -187,7 +212,7 @@ h1 em{font-weight:400;color:var(--green);font-style:italic}
   <nav aria-label="Main navigation">
    <a class="brandmark" href="#top" aria-label="Rahul Sajwan home"><span class="mark">RS</span><span>RAHUL SAJWAN</span></a>
    <div class="navlinks" id="navlinks">
-    <a href="#about">About</a><a href="#project">DevGanga Amrit</a><a href="#skills">Capabilities</a><a href="#process">Approach</a>
+    <a href="#about">About</a><a href="#selected-work">Selected Photos</a><a href="#project">DevGanga Amrit</a><a href="#skills">Capabilities</a><a href="#process">Approach</a>
    </div>
    <div class="nav-right"><a class="nav-cta" href="#contact">Start a conversation ↗</a><button class="menu" id="menu" aria-label="Toggle menu" aria-expanded="false">☰</button></div>
   </nav>
@@ -203,11 +228,9 @@ h1 em{font-weight:400;color:var(--green);font-style:italic}
     <div class="hero-actions fade"><a class="btn btn-primary" href="#project">Explore DevGanga Amrit <span>↗</span></a><a class="btn btn-secondary" href="#about">A little about me ↓</a></div>
     <p class="hero-note fade">Based in Uttarakhand, India · Building with care, learning as I go.</p>
    </div>
-   <div class="visual-stage fade" aria-label="Stylized concept artwork for a premium DevGanga Amrit bottle">
-    <div class="river-line"></div><div class="stage-index">01 / PROJECT IN FOCUS</div>
-    <div class="bottle-scene" aria-hidden="true"><div class="bottle-cap"></div><div class="bottle-neck"></div><div class="bottle-body"><div class="label"><small>Devprayag · Uttarakhand</small><strong>DEVGANGA<br>AMRIT</strong><span>FOR PUJA USE</span><div class="drop">✧</div></div></div></div>
-    <div class="float-card"><small>Rooted in heritage</small><strong>A sacred origin.<br>A thoughtful identity.</strong></div>
-    <div class="stage-caption">A visual direction concept · 250 ml</div>
+   <div class="personal-hero-visual fade" aria-label="Rahul Sajwan professional portrait">
+    <img src="portrait.jpg" alt="Rahul Sajwan — professional portrait" fetchpriority="high">
+    <div class="personal-photo-caption"><span>RAHUL SAJWAN</span><small>Personal portfolio · Selected work</small></div>
    </div>
   </div>
  </section>
@@ -228,13 +251,25 @@ h1 em{font-weight:400;color:var(--green);font-style:italic}
   </div>
  </section>
 
+
+ <section class="section" id="selected-work">
+  <div class="wrap">
+   <div class="section-head fade"><div class="kicker">A little more about me</div><h2>The person behind the projects.</h2><p>A few personal photographs to keep this portfolio grounded in my own identity—not just the work I’m building.</p></div>
+   <div class="personal-gallery fade">
+    <figure><img src="portrait.jpg" alt="Rahul Sajwan — portrait" loading="lazy"><figcaption>Portrait · Personal profile</figcaption></figure>
+    <figure><img src="profile.jpg" alt="Rahul Sajwan — profile photograph" loading="lazy"><figcaption>Profile · Personal identity</figcaption></figure>
+    <figure><img src="seated.jpg" alt="Rahul Sajwan — seated photograph" loading="lazy"><figcaption>Personal photograph · Selected image</figcaption></figure>
+   </div>
+  </div>
+ </section>
+
  <section class="section project-section" id="project">
   <div class="wrap">
    <div class="section-head fade"><div class="kicker">Featured project · Founder-led</div><h2>Building a spiritual heritage brand from the ground up.</h2><p>DevGanga Amrit is my current focus: a developing business that brings together heritage, thoughtful product presentation, digital experience and practical business planning.</p></div>
    <article class="project-card fade">
     <div class="project-art" aria-label="Stylized illustration inspired by Himalayan mountain landscapes and DevGanga Amrit packaging">
      <div class="sun"></div><div class="mountain back"></div><div class="mountain"></div>
-     <div class="project-wordmark">DEVGANGA AMRIT</div>
+     <img class="project-logo-badge" src="devganga-amrit-logo.png" alt="DevGanga Amrit logo" loading="lazy"><div class="project-wordmark">DEVGANGA AMRIT</div>
      <div class="mini-bottle" aria-hidden="true"><div class="cap"></div><div class="neck"></div><div class="body"><div class="paper-label"><small>DEVPRAYAG · INDIA</small><b>DEVGANGA<br>AMRIT</b><span>FOR PUJA USE</span></div></div></div>
      <div class="project-tag">Spiritual heritage · In development</div>
     </div>
@@ -251,6 +286,22 @@ h1 em{font-weight:400;color:var(--green);font-style:italic}
      <a class="btn btn-primary" href="mailto:devgangaamrit@gmail.com?subject=DevGanga%20Amrit%20project%20enquiry">Discuss the project ↗</a>
      <p class="disclaimer">Product concept for puja and ritual use only — not for drinking. Product availability and launch status are not being represented as confirmed.</p>
     </div>
+   </article>
+
+
+   <article class="poster-feature fade" aria-label="Selected DevGanga Amrit promotional poster">
+    <div class="poster-feature-copy">
+     <div class="kicker">Selected creative work · 01</div>
+     <h3>Brand story, brought into a visual.</h3>
+     <p>This poster is shown as an early promotional concept for DevGanga Amrit. It communicates the Devprayag origin, the 250 ml product direction and the intended religious-use positioning. The visual is presented as a concept asset while the brand and product remain in development.</p>
+    </div>
+    <div class="poster-image-wrap"><img src="devganga-amrit-poster.jpg" alt="DevGanga Amrit promotional poster concept featuring Devprayag, a 250 ml bottle and ritual-use information" loading="lazy"></div>
+   </article>
+
+
+   <article class="bottle-concept-feature fade">
+    <div class="copy"><div class="kicker">Product visual · Concept</div><h3>From brand direction to product presentation.</h3><p>This bottle image is a visual concept for the proposed 250 ml DevGanga Amrit product. It is included to show the direction of the packaging and brand presentation; it should not be read as confirmation that the product is commercially launched.</p></div>
+    <img src="devganga-amrit-bottle-concept.png" alt="DevGanga Amrit 250 ml bottle visual concept" loading="lazy">
    </article>
 
    <div class="case-study fade">
